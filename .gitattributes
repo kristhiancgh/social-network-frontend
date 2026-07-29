@@ -1,0 +1,37 @@
+# =============================================================================
+#  Normalización de fin de línea
+# =============================================================================
+#  Git para Windows (core.autocrlf=true por defecto) convierte los archivos a
+#  CRLF al clonar. Para el código TypeScript da igual, pero nginx.conf y los
+#  scripts se ejecutan dentro de un contenedor Linux, donde un CRLF de más
+#  produce errores que no apuntan a su causa.
+#
+#  Fijarlo aquí hace que el repositorio se comporte igual en Windows, macOS y
+#  Linux.
+# =============================================================================
+
+* text=auto eol=lf
+
+# --- Se ejecutan o se leen dentro del contenedor: SIEMPRE LF ------------------
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+Dockerfile.*    text eol=lf
+*.conf          text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+.nvmrc          text eol=lf
+
+# --- Solo para Windows --------------------------------------------------------
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+*.ps1           text eol=crlf
+
+# --- Binarios -----------------------------------------------------------------
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.gif           binary
+*.ico           binary
+*.woff          binary
+*.woff2         binary
+*.pdf           binary

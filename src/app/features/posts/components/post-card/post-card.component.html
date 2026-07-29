@@ -1,0 +1,37 @@
+<article class="card post">
+  <header class="post-head">
+    <app-avatar [name]="post().authorAlias || post().authorUsername" [size]="40" />
+    <div class="post-author">
+      <span class="name">&#64;{{ post().authorAlias || post().authorUsername }}</span>
+      <!-- title gives the exact timestamp on hover; the relative label is
+           friendlier but loses precision. -->
+      <time
+        class="muted when"
+        [attr.datetime]="post().publishedAt"
+        [title]="post().publishedAt"
+      >{{ post().publishedAt | relativeTime }}</time>
+    </div>
+  </header>
+
+  <p class="post-message">{{ post().message }}</p>
+
+  <footer class="post-foot">
+    <button
+      type="button"
+      class="like"
+      [class.liked]="post().likedByMe"
+      [disabled]="post().likePending"
+      (click)="likeToggled.emit(post().id)"
+      [attr.aria-pressed]="post().likedByMe"
+      [attr.aria-label]="
+        (post().likedByMe ? 'Unlike' : 'Like') +
+        ' this post. ' + post().likeCount + ' likes'
+      "
+    >
+      <span class="heart" aria-hidden="true">{{ post().likedByMe ? '&#9829;' : '&#9825;' }}</span>
+      <!-- aria-live so a screen reader announces the count changing when
+           somebody else likes the post over the WebSocket. -->
+      <span class="count" aria-live="polite">{{ post().likeCount }}</span>
+    </button>
+  </footer>
+</article>

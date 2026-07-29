@@ -1,0 +1,134 @@
+<div class="page stack">
+  @if (store.loading()) {
+    <app-spinner label="Loading profile..." />
+  } @else {
+    @if (store.needsSetup()) {
+      <div class="card notice-card">
+        <h2>Finish setting up your profile</h2>
+        <p class="muted">
+          Your account exists, but the personal details have not been filled in yet.
+          Registration only creates credentials - names, birth date and alias belong
+          to a different service.
+        </p>
+      </div>
+    }
+
+    @if (store.profile(); as profile) {
+      <div class="card">
+        <div class="profile-head">
+          <app-avatar [name]="profile.fullName" [size]="64" />
+          <div>
+            <h1>{{ profile.fullName }}</h1>
+            <p class="muted alias">&#64;{{ profile.alias }}</p>
+          </div>
+        </div>
+
+        @if (profile.bio) {
+          <p class="bio">{{ profile.bio }}</p>
+        }
+
+        <dl class="details">
+          <div>
+            <dt>First name</dt>
+            <dd>{{ profile.firstName }}</dd>
+          </div>
+          <div>
+            <dt>Last name</dt>
+            <dd>{{ profile.lastName }}</dd>
+          </div>
+          <div>
+            <dt>Date of birth</dt>
+            <dd>{{ profile.birthDate | date: 'longDate' }} ({{ profile.age }} years)</dd>
+          </div>
+          <div>
+            <dt>Alias</dt>
+            <dd>&#64;{{ profile.alias }}</dd>
+          </div>
+          <div>
+            <dt>Username</dt>
+            <dd>{{ authStore.username() }}</dd>
+          </div>
+          <div>
+            <dt>Member since</dt>
+            <dd>{{ profile.createdAt | date: 'longDate' }}</dd>
+          </div>
+        </dl>
+
+        @if (!editing()) {
+          <button type="button" class="btn btn-ghost" (click)="startEditing()">
+            Edit profile
+          </button>
+        }
+      </div>
+    }
+
+    @if (editing() || store.needsSetup()) {
+      <form class="card stack" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <h2>{{ store.needsSetup() ? 'Create your profile' : 'Edit profile' }}</h2>
+
+        <div class="grid">
+          <div class="field">
+            <label for="firstName">First name</label>
+            <input id="firstName" class="input" formControlName="firstName"
+                   [class.is-invalid]="isInvalid('firstName')" />
+            @if (isInvalid('firstName')) {
+              <span class="field-error">Required, up to 80 characters</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="lastName">Last name</label>
+            <input id="lastName" class="input" formControlName="lastName"
+                   [class.is-invalid]="isInvalid('lastName')" />
+            @if (isInvalid('lastName')) {
+              <span class="field-error">Required, up to 80 characters</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="birthDate">Date of birth</label>
+            <!-- max=today: the server rejects a future date through
+                 ck_profiles_birth_past, so the picker refuses it first. -->
+            <input id="birthDate" type="date" class="input" formControlName="birthDate"
+                   [max]="today" [class.is-invalid]="isInvalid('birthDate')" />
+            @if (isInvalid('birthDate')) {
+              <span class="field-error">Required, and must be in the past</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="alias">Alias</label>
+            <input id="alias" class="input" formControlName="alias" autocapitalize="none"
+                   [class.is-invalid]="isInvalid('alias')" />
+            @if (isInvalid('alias')) {
+              <span class="field-error">3-50 characters: letters, digits, dot or underscore</span>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bio">Bio <span class="muted">(optional)</span></label>
+          <textarea id="bio" class="textarea" formControlName="bio" maxlength="280"></textarea>
+          <span class="muted counter">{{ bioLength() }}/280</span>
+        </div>
+
+        <app-alert [problem]="store.error()" />
+
+        <div class="row">
+          <button type="submit" class="btn btn-primary" [disabled]="store.saving()">
+            {{ store.saving() ? 'Saving...' : 'Save profile' }}
+          </button>
+          @if (!store.needsSetup()) {
+            <button type="button" class="btn btn-ghost" (click)="cancelEditing()">
+              Cancel
+            </button>
+          }
+        </div>
+      </form>
+    }
+
+    @if (!store.profile() && !store.needsSetup()) {
+      <app-alert [problem]="store.error()" />
+    }
+  }
+</div>

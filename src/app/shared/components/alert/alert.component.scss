@@ -1,0 +1,24 @@
+.alert {
+  background: var(--c-danger-soft);
+  border: 1px solid color-mix(in srgb, var(--c-danger) 30%, transparent);
+  color: var(--c-danger);
+  border-radius: var(--radius-sm);
+  padding: var(--s-3) var(--s-4);
+  font-size: 0.9rem;
+}
+
+.alert-list {
+  margin: var(--s-2) 0 0;
+  padding-left: var(--s-5);
+}
+
+.alert-list code {
+  font-weight: 600;
+}
+
+.alert-trace {
+  margin-top: var(--s-2);
+  font-size: 0.75rem;
+  opacity: 0.75;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

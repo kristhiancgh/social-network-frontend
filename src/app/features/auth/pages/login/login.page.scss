@@ -1,0 +1,58 @@
+.login-wrap {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--s-4);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.submit {
+  width: 100%;
+  margin-top: var(--s-4);
+}
+
+.password-row {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.reveal {
+  flex-shrink: 0;
+  padding: 0 var(--s-3);
+  font-size: 0.85rem;
+}
+
+.notice {
+  background: var(--c-primary-soft);
+  border-radius: var(--radius-sm);
+  padding: var(--s-3);
+  font-size: 0.875rem;
+}
+
+.demo {
+  margin-top: var(--s-5);
+  border-top: 1px solid var(--c-border);
+  padding-top: var(--s-4);
+  font-size: 0.875rem;
+}
+
+.demo summary {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.demo-users {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+
+.btn-xs {
+  padding: var(--s-1) var(--s-2);
+  font-size: 0.8rem;
+}

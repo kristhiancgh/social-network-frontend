@@ -1,0 +1,32 @@
+<header class="header">
+  <div class="header-inner">
+    <a routerLink="/posts" class="brand">social<span>.network</span></a>
+
+    <nav class="nav">
+      <a routerLink="/posts" routerLinkActive="active">Timeline</a>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
+    </nav>
+
+    <div class="user">
+      <!-- Connection state, so "my like did not appear" is diagnosable
+           without opening devtools. -->
+      <span
+        class="dot"
+        [class.dot-live]="realtime.status() === 'connected'"
+        [class.dot-warn]="realtime.status() === 'connecting'"
+        [title]="'Realtime: ' + realtime.status()"
+      ></span>
+
+      <app-avatar [name]="authStore.username()" [size]="30" />
+      <span class="username">{{ authStore.username() }}</span>
+
+      <button type="button" class="btn btn-ghost btn-sm" (click)="authStore.logout()">
+        Log out
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <router-outlet />
+</main>

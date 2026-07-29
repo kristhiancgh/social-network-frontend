@@ -1,0 +1,80 @@
+<div class="login-wrap">
+  <div class="card login-card">
+    <h1>Sign in</h1>
+    <p class="muted">Welcome back to the network.</p>
+
+    @if (sessionExpired()) {
+      <p class="notice">Your session expired. Please sign in again.</p>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          class="input"
+          formControlName="username"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          [class.is-invalid]="isInvalid('username')"
+        />
+        @if (isInvalid('username')) {
+          <span class="field-error">Username is required</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-row">
+          <input
+            id="password"
+            [type]="passwordVisible() ? 'text' : 'password'"
+            class="input"
+            formControlName="password"
+            autocomplete="current-password"
+            [class.is-invalid]="isInvalid('password')"
+          />
+          <button
+            type="button"
+            class="btn btn-ghost reveal"
+            (click)="passwordVisible.set(!passwordVisible())"
+            [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
+          >
+            {{ passwordVisible() ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        @if (isInvalid('password')) {
+          <span class="field-error">Password is required</span>
+        }
+      </div>
+
+      <!-- Diagnostics hidden here: on a login form the traceId and service
+           name are noise to the person typing. -->
+      <app-alert [problem]="authStore.error()" [showTrace]="false" />
+
+      <button
+        type="submit"
+        class="btn btn-primary submit"
+        [disabled]="authStore.loading()"
+      >
+        {{ authStore.loading() ? 'Signing in...' : 'Sign in' }}
+      </button>
+    </form>
+
+    <details class="demo">
+      <summary>Demo accounts</summary>
+      <p class="muted">
+        Every seeded account uses the password <code>Password123!</code>
+      </p>
+      <div class="demo-users">
+        @for (user of demoUsers; track user) {
+          <button type="button" class="btn btn-ghost btn-xs" (click)="fill(user)">
+            {{ user }}
+          </button>
+        }
+      </div>
+    </details>
+  </div>
+</div>

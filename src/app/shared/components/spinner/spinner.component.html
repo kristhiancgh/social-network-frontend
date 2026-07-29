@@ -1,0 +1,8 @@
+<div class="spinner-wrap" role="status">
+  <span class="spinner"></span>
+  <!-- Announced to screen readers; a silent spinner tells them nothing. -->
+  <span class="sr-only">{{ label() }}</span>
+  @if (showLabel()) {
+    <span class="muted">{{ label() }}</span>
+  }
+</div>

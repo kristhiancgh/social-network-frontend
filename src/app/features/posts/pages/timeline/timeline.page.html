@@ -1,0 +1,47 @@
+<div class="page stack">
+  <app-create-post [submitting]="store.creating()" (published)="publish($event)" />
+
+  <div class="spread heading">
+    <h1>Timeline</h1>
+    @if (realtime.status() === 'connected') {
+      <span class="live" title="Like counts update in real time">&#9679; live</span>
+    } @else if (realtime.status() === 'connecting') {
+      <span class="muted small">connecting...</span>
+    } @else if (realtime.status() !== 'idle') {
+      <span class="offline" title="Reconnecting - counts may be stale">
+        &#9679; offline
+      </span>
+    }
+  </div>
+
+  <app-alert [problem]="store.error()" />
+
+  @if (store.loading()) {
+    <app-spinner label="Loading the timeline..." />
+  } @else if (store.isEmpty()) {
+    <div class="card empty">
+      <h2>Nothing here yet</h2>
+      <p class="muted">
+        Be the first to publish something. Posts appear here as soon as anyone
+        writes them.
+      </p>
+    </div>
+  } @else {
+    @for (post of store.posts(); track post.id) {
+      <app-post-card [post]="post" (likeToggled)="store.toggleLike($event)" />
+    }
+
+    @if (store.hasMore()) {
+      <button
+        type="button"
+        class="btn btn-ghost load-more"
+        [disabled]="store.loadingMore()"
+        (click)="store.loadMore()"
+      >
+        {{ store.loadingMore() ? 'Loading...' : 'Load ' + store.remaining() + ' more' }}
+      </button>
+    } @else {
+      <p class="muted end">That is everything.</p>
+    }
+  }
+</div>

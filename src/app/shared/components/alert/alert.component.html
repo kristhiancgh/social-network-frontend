@@ -1,0 +1,21 @@
+@if (problem(); as p) {
+  <div class="alert" [class.alert-warning]="p.status < 500" role="alert">
+    <div class="alert-body">
+      <strong>{{ p.detail || p.title }}</strong>
+
+      @if (p.errors?.length) {
+        <ul class="alert-list">
+          @for (violation of p.errors; track violation.field + violation.message) {
+            <li><code>{{ violation.field }}</code> {{ violation.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    @if (showTrace()) {
+      <div class="alert-trace">
+        {{ p.errorCode }} &middot; {{ p.service }} &middot; trace {{ p.traceId }}
+      </div>
+    }
+  </div>
+}

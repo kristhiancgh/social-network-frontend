@@ -1,0 +1,83 @@
+.header {
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--s-3) var(--s-4);
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--c-text);
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.brand span {
+  color: var(--c-primary);
+}
+
+.nav {
+  display: flex;
+  gap: var(--s-4);
+  margin-right: auto;
+}
+
+.nav a {
+  color: var(--c-text-muted);
+  padding: var(--s-1) 0;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav a.active {
+  color: var(--c-primary);
+  border-bottom-color: var(--c-primary);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.username {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.btn-sm {
+  padding: var(--s-1) var(--s-3);
+  font-size: 0.85rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-danger);
+}
+
+.dot-live {
+  background: var(--c-success);
+}
+
+.dot-warn {
+  background: #d97706;
+}
+
+@media (max-width: 560px) {
+  .username {
+    display: none;
+  }
+}

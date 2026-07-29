@@ -1,0 +1,60 @@
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+
+.profile-head h1 {
+  margin: 0;
+}
+
+.alias {
+  margin: 0;
+}
+
+.bio {
+  margin: 0 0 var(--s-4);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-4);
+  margin: 0 0 var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-border);
+}
+
+.details dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-text-muted);
+  margin-bottom: var(--s-1);
+}
+
+.details dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0 var(--s-4);
+}
+
+.counter {
+  font-size: 0.78rem;
+  align-self: flex-end;
+}
+
+.notice-card {
+  background: var(--c-primary-soft);
+  border-color: color-mix(in srgb, var(--c-primary) 25%, transparent);
+}
+
+.notice-card h2 {
+  margin-top: 0;
+}

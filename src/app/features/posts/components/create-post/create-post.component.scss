@@ -1,0 +1,16 @@
+.counter {
+  font-size: 0.82rem;
+}
+
+.counter.over {
+  color: var(--c-danger);
+}
+
+.published {
+  margin: 0;
+  background: var(--c-success-soft);
+  color: var(--c-success);
+  border-radius: var(--radius-sm);
+  padding: var(--s-2) var(--s-3);
+  font-size: 0.875rem;
+}

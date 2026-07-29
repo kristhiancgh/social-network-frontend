@@ -1,0 +1,30 @@
+{
+  "//": [
+    "Dev-server proxy. It is what lets every API path in the app stay relative:",
+    "the browser talks to localhost:4200 and this forwards to the gateway, so",
+    "there is no cross-origin request and no environment file to swap at build",
+    "time. In Docker, nginx.conf does exactly the same job.",
+    "",
+    "ws: true on /ws is required - without it the STOMP handshake is proxied as",
+    "an ordinary HTTP request, the Upgrade never completes, and the real-time",
+    "like counter silently never connects."
+  ],
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "warn"
+  },
+  "/ws-posts": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "ws": true,
+    "logLevel": "warn"
+  },
+  "/ws": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "ws": true,
+    "logLevel": "warn"
+  }
+}

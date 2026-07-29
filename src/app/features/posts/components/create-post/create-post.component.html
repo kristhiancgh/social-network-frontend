@@ -1,0 +1,24 @@
+<form class="card stack" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <label class="sr-only" for="message">What is on your mind?</label>
+  <textarea
+    id="message"
+    class="textarea"
+    formControlName="message"
+    placeholder="What is on your mind?"
+    [maxlength]="maxLength"
+  ></textarea>
+
+  <div class="spread">
+    <span class="muted counter" [class.over]="remaining() < 20">
+      {{ remaining() }} characters left
+    </span>
+
+    <button type="submit" class="btn btn-primary" [disabled]="submitting() || form.invalid">
+      {{ submitting() ? 'Publishing...' : 'Publish' }}
+    </button>
+  </div>
+
+  @if (justPublished()) {
+    <p class="published">Published. It is at the top of the timeline.</p>
+  }
+</form>
